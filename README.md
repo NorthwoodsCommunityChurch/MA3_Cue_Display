@@ -9,34 +9,21 @@ Real-time cue display for GrandMA3 lighting consoles. Shows the current cue name
 - Web-based interface accessible from any device
 - Auto-reconnect on connection loss
 - Clean, theatrical UI optimized for stage visibility
+- **Zero-command installation** - just double-click to start
 
-## Quick Start
+## Quick Start (macOS)
 
-### Prerequisites
+1. **Download** this project (or clone the repository)
+2. **Double-click** `Start Cue Display.app`
+3. **Done!** The display opens in your browser automatically
 
-- Node.js 16.0.0 or higher
-- GrandMA3 console or onPC software
-- Network connection between your computer and the console
+That's it! The app handles everything automatically:
+- Installs Node.js if needed (via Homebrew)
+- Installs dependencies
+- Starts the server
+- Opens your browser
 
-### Installation
-
-```bash
-# Clone the repository
-git clone <repository-url>
-cd gma3-cue-display
-
-# Install dependencies
-npm install
-
-# Start the server
-npm start
-```
-
-Open http://localhost:3000 in your browser.
-
-### One-Click Start (macOS)
-
-Double-click `scripts/start.sh` to automatically install dependencies and launch the server.
+> **Note:** On first run, you may need to right-click the app and select "Open" to bypass Gatekeeper.
 
 ## GrandMA3 Configuration
 
@@ -57,7 +44,7 @@ In the OSC configuration grid, set **Send** to **Yes** for the rows you want to 
 ### Step 4: Verify Connection
 When a cue is triggered on the console, you should see the cue name update in real-time on the web display.
 
-## Configuration
+## Advanced Configuration
 
 ### Environment Variables
 
@@ -66,27 +53,18 @@ When a cue is triggered on the console, you should see the cue name update in re
 | `HTTP_PORT` | 3000 | Web server port |
 | `OSC_PORT` | 8000 | OSC listening port |
 
-### Example with custom ports:
-```bash
-HTTP_PORT=8080 OSC_PORT=9000 npm start
-```
-
-Or copy `.env.example` to `.env` and modify the values.
+To use custom ports, copy `.env.example` to `.env` and modify the values.
 
 ## Project Structure
 
 ```
 gma3-cue-display/
-├── public/              # Static web files
-│   └── index.html       # Web display interface
+├── Start Cue Display.app  # Double-click to start (macOS)
+├── public/
+│   └── index.html         # Web display interface
 ├── src/
-│   └── server.js        # Node.js server (OSC + WebSocket)
-├── scripts/
-│   └── start.sh         # macOS one-click launcher
-├── .env.example         # Environment configuration template
-├── .gitignore
-├── LICENSE
-├── package.json
+│   └── server.js          # Node.js server (OSC + WebSocket)
+├── .env.example           # Environment configuration template
 └── README.md
 ```
 

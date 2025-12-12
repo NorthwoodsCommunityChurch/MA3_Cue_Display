@@ -1,0 +1,67 @@
+#!/bin/bash
+
+#######################################################################
+#  GrandMA3 Cue Display - macOS App Launcher
+#
+#  This script runs when you double-click the app.
+#  It automatically installs everything needed and starts the server.
+#######################################################################
+
+# Get the directory where this app bundle is located
+APP_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../../.." && pwd )"
+cd "$APP_DIR"
+
+# Ports
+OSC_PORT=8000
+HTTP_PORT=3000
+
+# Function to check if a command exists
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+# Function to show a macOS notification
+notify() {
+    osascript -e "display notification \"$1\" with title \"GrandMA3 Cue Display\""
+}
+
+# Function to show an alert dialog
+alert() {
+    osascript -e "display dialog \"$1\" with title \"GrandMA3 Cue Display\" buttons {\"OK\"} default button \"OK\""
+}
+
+# Check for Node.js, install if needed
+if ! command_exists node; then
+    notify "Installing Node.js... This may take a few minutes."
+
+    # Install Homebrew if needed
+    if ! command_exists brew; then
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" </dev/null
+
+        # Add Homebrew to PATH for Apple Silicon Macs
+        if [[ -f "/opt/homebrew/bin/brew" ]]; then
+            eval "$(/opt/homebrew/bin/brew shellenv)"
+        fi
+    fi
+
+    # Install Node.js
+    brew install node
+
+    if ! command_exists node; then
+        alert "Failed to install Node.js. Please install it manually from nodejs.org"
+        exit 1
+    fi
+fi
+
+# Install npm dependencies if needed
+if [ ! -d "node_modules" ]; then
+    notify "Installing dependencies..."
+    npm install --silent 2>/dev/null
+fi
+
+# Open the browser
+sleep 1
+open "http://localhost:${HTTP_PORT}"
+
+# Start the server (this keeps the app running)
+HTTP_PORT=$HTTP_PORT OSC_PORT=$OSC_PORT node src/server.js
