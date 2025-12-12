@@ -23,6 +23,7 @@ ehthumbs.db
 # Editor directories
 .idea/
 .vscode/
+*.code-workspace
 *.swp
 *.swo
 *~
