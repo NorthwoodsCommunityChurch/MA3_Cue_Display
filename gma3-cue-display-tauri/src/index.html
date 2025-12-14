@@ -226,7 +226,6 @@
 
   <script>
     const { invoke } = window.__TAURI__.core;
-    const { open } = window.__TAURI__.opener;
 
     async function init() {
       try {
@@ -261,11 +260,11 @@
     }
 
     document.getElementById('openBtn').addEventListener('click', async () => {
-      await open('http://localhost:3000');
+      await invoke('open_url', { url: 'http://localhost:3000' });
     });
 
     document.getElementById('oscLogBtn').addEventListener('click', async () => {
-      await open('http://localhost:3000/osc-log');
+      await invoke('open_url', { url: 'http://localhost:3000/osc-log' });
     });
 
     init();

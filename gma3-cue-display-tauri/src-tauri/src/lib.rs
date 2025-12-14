@@ -95,6 +95,11 @@ fn get_osc_status() -> serde_json::Value {
     })
 }
 
+#[tauri::command]
+fn open_url(url: String) {
+    let _ = open::that(url);
+}
+
 fn parse_osc_message(msg: &OscMessage) -> Option<()> {
     let now = chrono::Utc::now().to_rfc3339_opts(chrono::SecondsFormat::Millis, true);
 
@@ -353,7 +358,7 @@ pub fn run() {
 
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![get_network_info, get_osc_status])
+        .invoke_handler(tauri::generate_handler![get_network_info, get_osc_status, open_url])
         .setup(|app| {
             // Start web server in separate thread with its own tokio runtime
             std::thread::spawn(|| {
