@@ -16,6 +16,7 @@ Open the display URL in any web browser on any device (phone, tablet, laptop, de
 - **Menu bar app** - Runs silently in your macOS menu bar
 - **Real-time updates** - Cue changes appear instantly via WebSocket
 - **OSC communication** - Receives cue data from GrandMA3 via UDP
+- **OSC log viewer** - Debug incoming OSC messages at `/osc-log`
 - **Clean UI** - Large, readable text optimized for stage visibility
 - **Auto-reconnect** - Browser reconnects automatically if connection drops
 
@@ -41,7 +42,7 @@ The launcher window shows:
 ### Step 2: Configure OSC Output
 1. **Enable Output**: Toggle ON
 2. **Destination IP**: Enter the IP address of the computer running this app
-3. **Port**: Set to `8000` (or match the `OSC_PORT` in your configuration)
+3. **Port**: Set to `8000`
 4. **Mode**: UDP
 
 ### Step 3: Enable Send Options
@@ -64,7 +65,8 @@ MA3 Cue Display/
 ├── cue-display-app/          # Electron menu bar app
 │   ├── main.js               # Main process (server + OSC)
 │   ├── public/
-│   │   └── index.html        # Web cue display (served to browsers)
+│   │   ├── index.html        # Web cue display (served to browsers)
+│   │   └── osc-log.html      # OSC message log viewer
 │   ├── window.html           # Launcher window UI
 │   └── package.json          # Dependencies and build config
 └── README.md
@@ -112,6 +114,11 @@ Connect to the server's WebSocket endpoint to receive real-time updates. Message
 
 - `state` - Initial state on connection
 - `cueUpdate` - Cue information has changed
+- `oscLog` - New OSC message received (for log viewers)
+
+### GET /api/osc-log
+
+Returns the last 100 OSC messages as a JSON array.
 
 ## Troubleshooting
 
@@ -126,7 +133,7 @@ Connect to the server's WebSocket endpoint to receive real-time updates. Message
 
 1. **Check Send Setting**: Ensure "Send" is set to Yes for your sequence in the OSC grid
 2. **Trigger Cue**: Press Go+ on the console to trigger a cue change
-3. **Check Server Logs**: The server logs all incoming OSC messages for debugging
+3. **View OSC Log**: Open the OSC log from the launcher to see incoming messages
 
 ## Browser Support
 
