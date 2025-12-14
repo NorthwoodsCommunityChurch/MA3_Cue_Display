@@ -122,18 +122,6 @@ function startServer() {
         });
       }
 
-      // Extract sequence identifier from address
-      const addressParts = address.split('/').filter(p => p);
-      if (addressParts.length > 0) {
-        const lastPart = addressParts[addressParts.length - 1];
-        if (lastPart.includes('.')) {
-          const pathParts = lastPart.split('.');
-          currentState.sequenceName = 'Seq ' + pathParts[pathParts.length - 1];
-        } else {
-          currentState.sequenceName = lastPart;
-        }
-      }
-
       // Parse GrandMA3 OSC message format
       if (args && args.length > 0) {
         const action = args[0]?.value;
@@ -142,8 +130,10 @@ function startServer() {
           if (args[2] && args[2].type === 's') {
             currentState.cueName = args[2].value;
 
+            // Parse "SequenceName CueNum CueName" format
             const match = args[2].value.match(/^(.+?)\s+(\d+(?:\.\d+)?)\s+(.+)$/);
             if (match) {
+              currentState.sequenceName = match[1];
               currentState.cueNumber = match[2];
             }
           }

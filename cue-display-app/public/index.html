@@ -51,11 +51,17 @@
         }
 
         .cue-number {
-            color: #00a8ff;
+            color: #ffffff;
         }
 
         .cue-name {
             color: #ffffff;
+        }
+
+        .waiting {
+            color: #444444;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 400;
         }
     </style>
 </head>
@@ -63,7 +69,7 @@
     <div class="sequence-name" id="sequenceName"></div>
     <div class="cue-line">
         <span class="cue-number" id="cueNumber"></span>
-        <span class="cue-name" id="cueName"></span>
+        <span class="cue-name waiting" id="cueName">Waiting for first cue...</span>
     </div>
 
     <script>
@@ -71,6 +77,7 @@
         const cueNumberEl = document.getElementById('cueNumber');
         const cueNameEl = document.getElementById('cueName');
         let ws;
+        let hasReceivedCue = false;
 
         function connect() {
             const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
@@ -79,7 +86,13 @@
             ws.onmessage = (event) => {
                 try {
                     const msg = JSON.parse(event.data);
-                    if (msg.data) {
+                    if (msg.data && msg.data.cueName) {
+                        // Remove waiting state on first cue
+                        if (!hasReceivedCue) {
+                            hasReceivedCue = true;
+                            cueNameEl.classList.remove('waiting');
+                        }
+
                         // Sequence name on first line
                         sequenceNameEl.textContent = msg.data.sequenceName || '';
 
