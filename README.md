@@ -117,32 +117,6 @@ Connect to the server's WebSocket endpoint to receive real-time updates. Message
 
 Returns the last 100 OSC messages as a JSON array.
 
-## Troubleshooting
-
-### No Connection
-
-1. **Check Network**: Ensure console and display computer are on the same network
-2. **Verify IP**: Confirm the destination IP in GrandMA3 OSC settings matches your computer
-3. **Check Port**: Make sure port 8000 isn't blocked by a firewall
-4. **Enable Output**: Verify "Enable Output" is ON in GrandMA3
-
-### Cues Not Updating
-
-1. **Check Send Setting**: Ensure "Send" is set to Yes for your sequence in the OSC grid
-2. **Trigger Cue**: Press Go+ on the console to trigger a cue change
-3. **View OSC Log**: Open the OSC log from the launcher to see incoming messages
-
-## Browser Support
-
-- Chrome (recommended)
-- Firefox
-- Safari
-- Edge
-
 ## License
 
 MIT License - see [LICENSE](LICENSE) for details.
-
-## Credits
-
-Built for the live entertainment industry. Designed to work with MA Lighting's GrandMA3 platform.
