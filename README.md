@@ -1,6 +1,6 @@
 # GrandMA3 Cue Display
 
-A macOS menu bar app that displays your current GrandMA3 cue in a web browser. Point any device on your network to the display URL and see real-time cue information from your lighting console.
+A macOS app that displays your current GrandMA3 cue in a web browser. Point any device on your network to the display URL and see real-time cue information from your lighting console.
 
 ## What It Does
 
