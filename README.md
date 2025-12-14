@@ -2,6 +2,9 @@
 
 A macOS menu bar app that displays your current GrandMA3 cue in a web browser.
 
+![Launcher](Launcher.png)
+![Web Display](Web%20Layout.png)
+
 ## What It Does
 
 This app runs quietly in your macOS menu bar and serves a **web-based cue display** that shows:
