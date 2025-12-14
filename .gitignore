@@ -31,9 +31,18 @@ ehthumbs.db
 # Build output
 dist/
 build/
+*.dmg
+*.blockmap
 
 # Optional npm cache
 .npm
 
 # Optional eslint cache
 .eslintcache
+
+# Screenshots
+*.png
+!cue-display-app/assets/*.png
+
+# macOS icon build artifacts
+*.iconset/
