@@ -24,8 +24,12 @@ The launcher window shows the display URL and your network IP for easy access fr
 
 1. **Download** the DMG from Releases (or build from source)
 2. **Install** by dragging "GMA3 Cue Display" to Applications
-3. **Launch** the app - it appears in your menu bar
-4. **Open** the cue display in your browser from the launcher window
+3. **Fix macOS security warning** - Since the app isn't signed with an Apple Developer certificate, macOS may show a "damaged" error. Run this command in Terminal:
+   ```bash
+   xattr -cr /Applications/GMA3\ Cue\ Display.app
+   ```
+4. **Launch** the app - it appears in your menu bar
+5. **Open** the cue display in your browser from the launcher window
 
 The launcher window shows:
 - Display URL to open in any browser
