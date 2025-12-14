@@ -14,11 +14,8 @@ The launcher window shows the display URL and your network IP for easy access fr
 
 - **Web-based display** - View cues in any browser on any device on your network
 - **Menu bar app** - Runs silently in your macOS menu bar
-- **Real-time updates** - Cue changes appear instantly via WebSocket
 - **OSC communication** - Receives cue data from GrandMA3 via UDP
 - **OSC log viewer** - Debug incoming OSC messages at `/osc-log`
-- **Clean UI** - Large, readable text optimized for stage visibility
-- **Auto-reconnect** - Browser reconnects automatically if connection drops
 
 ## Quick Start (macOS)
 
