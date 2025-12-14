@@ -1,29 +1,35 @@
 # GrandMA3 Cue Display
 
-Real-time cue display for GrandMA3 lighting consoles. Shows the current cue name from your GrandMA3 console using OSC (Open Sound Control) protocol.
+A macOS menu bar app that displays your current GrandMA3 cue in a web browser. Point any device on your network to the display URL and see real-time cue information from your lighting console.
+
+## What It Does
+
+This app runs quietly in your macOS menu bar and serves a **web-based cue display** that shows:
+- **Sequence name** on the first line
+- **Cue number and name** on the second line
+
+Open the display URL in any web browser on any device (phone, tablet, laptop, dedicated monitor) to see your current cue in real-time.
 
 ## Features
 
-- Real-time cue display from GrandMA3 console
-- OSC communication (UDP)
-- Web-based interface accessible from any device
-- Auto-reconnect on connection loss
-- Clean, theatrical UI optimized for stage visibility
-- **Zero-command installation** - just double-click to start
+- **Web-based display** - View cues in any browser on any device on your network
+- **Menu bar app** - Runs silently in your macOS menu bar
+- **Real-time updates** - Cue changes appear instantly via WebSocket
+- **OSC communication** - Receives cue data from GrandMA3 via UDP
+- **Clean UI** - Large, readable text optimized for stage visibility
+- **Auto-reconnect** - Browser reconnects automatically if connection drops
 
 ## Quick Start (macOS)
 
-1. **Download** this project (or clone the repository)
-2. **Double-click** `Start Cue Display.app`
-3. **Done!** The display opens in your browser automatically
+1. **Download** the DMG from Releases (or build from source)
+2. **Install** by dragging "GMA3 Cue Display" to Applications
+3. **Launch** the app - it appears in your menu bar
+4. **Open** the cue display in your browser from the launcher window
 
-That's it! The app handles everything automatically:
-- Installs Node.js if needed (via Homebrew)
-- Installs dependencies
-- Starts the server
-- Opens your browser
-
-> **Note:** On first run, you may need to right-click the app and select "Open" to bypass Gatekeeper.
+The launcher window shows:
+- Display URL to open in any browser
+- OSC port for GrandMA3 configuration
+- Connection status indicator
 
 ## GrandMA3 Configuration
 
@@ -58,13 +64,13 @@ To use custom ports, copy `.env.example` to `.env` and modify the values.
 ## Project Structure
 
 ```
-gma3-cue-display/
-├── Start Cue Display.app  # Double-click to start (macOS)
-├── public/
-│   └── index.html         # Web display interface
-├── src/
-│   └── server.js          # Node.js server (OSC + WebSocket)
-├── .env.example           # Environment configuration template
+MA3 Cue Display/
+├── cue-display-app/          # Electron menu bar app
+│   ├── main.js               # Main process (server + OSC)
+│   ├── public/
+│   │   └── index.html        # Web cue display (served to browsers)
+│   ├── window.html           # Launcher window UI
+│   └── package.json          # Dependencies and build config
 └── README.md
 ```
 
@@ -72,17 +78,19 @@ gma3-cue-display/
 
 ```
 ┌─────────────────┐         OSC (UDP)          ┌─────────────────┐
-│   GrandMA3      │ ────────────────────────▶  │   Node.js       │
-│   Console       │        Port 8000           │   Server        │
+│   GrandMA3      │ ────────────────────────▶  │   Menu Bar App  │
+│   Console       │        Port 8000           │   (Electron)    │
 └─────────────────┘                            └────────┬────────┘
                                                         │
                                                         │ WebSocket
-                                                        │
+                                                        │ Port 3000
                                                ┌────────▼────────┐
                                                │   Web Browser   │
-                                               │   (Display)     │
+                                               │  (Cue Display)  │
                                                └─────────────────┘
 ```
+
+Open `http://<your-ip>:3000` in any browser to view the cue display.
 
 ## API Reference
 
