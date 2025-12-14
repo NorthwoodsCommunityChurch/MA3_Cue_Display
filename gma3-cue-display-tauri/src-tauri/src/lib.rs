@@ -307,7 +307,7 @@ async fn run_web_server() {
 }
 
 pub fn setup_tray<R: Runtime>(app: &tauri::App<R>) -> Result<(), Box<dyn std::error::Error>> {
-    let quit = MenuItem::with_id(app, "quit", "Quit GMA3 Cue Display", true, None::<&str>)?;
+    let quit = MenuItem::with_id(app, "quit", "Quit MA3 Cue Display", true, None::<&str>)?;
     let show = MenuItem::with_id(app, "show", "Show Launcher", true, None::<&str>)?;
     let open_browser = MenuItem::with_id(app, "open_browser", "Open Display in Browser", true, None::<&str>)?;
 
@@ -316,7 +316,7 @@ pub fn setup_tray<R: Runtime>(app: &tauri::App<R>) -> Result<(), Box<dyn std::er
     // Get the existing tray icon created by tauri.conf.json and configure it
     if let Some(tray) = app.tray_by_id("main") {
         tray.set_menu(Some(menu))?;
-        tray.set_tooltip(Some("GMA3 Cue Display"))?;
+        tray.set_tooltip(Some("MA3 Cue Display"))?;
         tray.on_menu_event(move |app, event| match event.id.as_ref() {
             "quit" => {
                 app.exit(0);

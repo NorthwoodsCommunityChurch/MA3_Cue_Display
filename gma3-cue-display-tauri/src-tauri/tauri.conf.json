@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "GMA3 Cue Display",
+  "productName": "MA3 Cue Display",
   "version": "1.0.0",
   "identifier": "com.gma3cuedisplay.display",
   "build": {
@@ -14,7 +14,7 @@
     },
     "windows": [
       {
-        "title": "GMA3 Cue Display",
+        "title": "MA3 Cue Display",
         "label": "launcher",
         "width": 400,
         "height": 450,
