@@ -13,21 +13,16 @@ window.electronAPI.getNetworkInfo().then(updateNetworkInfo).catch(console.error)
 // OSC connection status
 const oscDot = document.getElementById('oscDot');
 const oscStatusText = document.getElementById('oscStatusText');
-const oscDetail = document.getElementById('oscDetail');
 
 function updateOscStatus(status) {
   if (status.connected) {
     oscDot.classList.remove('disconnected');
     oscDot.classList.add('connected');
     oscStatusText.textContent = 'Receiving OSC';
-    if (status.lastMessage) {
-      oscDetail.textContent = status.lastMessage;
-    }
   } else {
     oscDot.classList.remove('connected');
     oscDot.classList.add('disconnected');
     oscStatusText.textContent = 'Waiting for OSC data...';
-    oscDetail.textContent = '';
   }
 }
 
@@ -53,6 +48,11 @@ function updateNetworkInfo(info) {
 // Open in browser button
 document.getElementById('openBtn').addEventListener('click', () => {
   window.electronAPI.openInBrowser(`http://localhost:${httpPort}`);
+});
+
+// Open OSC log button
+document.getElementById('oscLogBtn').addEventListener('click', () => {
+  window.electronAPI.openInBrowser(`http://localhost:${httpPort}/osc-log`);
 });
 
 // Set version

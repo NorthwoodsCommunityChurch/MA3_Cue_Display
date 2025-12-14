@@ -84,22 +84,11 @@
     }
 
     .osc-status {
-      margin-bottom: 4px;
+      margin-bottom: 16px;
     }
 
     .osc-status .status-dot.connected {
       background: #ff9500;
-    }
-
-    .osc-detail {
-      font-size: 10px;
-      color: #666;
-      margin-bottom: 16px;
-      font-family: 'SF Mono', Monaco, monospace;
-      max-width: 280px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
 
     .info-box {
@@ -151,6 +140,16 @@
 
     .open-button:active {
       transform: scale(0.98);
+    }
+
+    .open-button.secondary {
+      background: rgba(255,255,255,0.1);
+      margin-bottom: 12px;
+    }
+
+    .open-button.secondary:hover {
+      background: rgba(255,255,255,0.15);
+      box-shadow: none;
     }
 
     .hint {
@@ -224,7 +223,6 @@
       <span class="status-dot disconnected" id="oscDot"></span>
       <span id="oscStatusText">Waiting for OSC data...</span>
     </div>
-    <div class="osc-detail" id="oscDetail"></div>
 
     <div class="section-title">Network Info</div>
     <div class="info-box">
@@ -243,6 +241,7 @@
     </div>
 
     <button class="open-button" id="openBtn">Open Display in Browser</button>
+    <button class="open-button secondary" id="oscLogBtn">View OSC Log</button>
 
     <div class="login-setting" id="loginSetting">
       <input type="checkbox" id="openAtLogin">

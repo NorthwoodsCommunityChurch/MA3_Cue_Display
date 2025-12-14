@@ -26,6 +26,9 @@ let currentState = {
   connected: false
 };
 
+// Store OSC message log (keep last 100 messages)
+let oscLog = [];
+
 // Prevent multiple instances
 const gotTheLock = app.requestSingleInstanceLock();
 if (!gotTheLock) {
@@ -83,6 +86,16 @@ function startServer() {
       res.sendFile(path.join(__dirname, 'public', 'index.html'));
     });
 
+    // OSC log route
+    expressApp.get('/osc-log', (req, res) => {
+      res.sendFile(path.join(__dirname, 'public', 'osc-log.html'));
+    });
+
+    // API endpoint for OSC log
+    expressApp.get('/api/osc-log', (req, res) => {
+      res.json(oscLog);
+    });
+
     // WebSocket connection handling
     wss.on('connection', (ws) => {
       console.log('Web client connected');
@@ -109,6 +122,17 @@ function startServer() {
       const address = oscMsg.address;
       const args = oscMsg.args;
 
+      // Log the OSC message
+      const logEntry = {
+        timestamp: new Date().toISOString(),
+        address: address,
+        args: args ? args.map(a => ({ type: a.type, value: a.value })) : []
+      };
+      oscLog.unshift(logEntry);
+      if (oscLog.length > 100) oscLog.pop();
+
+      // Broadcast to OSC log viewers
+      broadcast({ type: 'oscLog', data: logEntry });
 
       currentState.connected = true;
       currentState.lastUpdate = new Date().toISOString();
