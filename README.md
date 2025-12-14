@@ -50,16 +50,12 @@ In the OSC configuration grid, set **Send** to **Yes** for the rows you want to 
 ### Step 4: Verify Connection
 When a cue is triggered on the console, you should see the cue name update in real-time on the web display.
 
-## Advanced Configuration
+## Ports
 
-### Environment Variables
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `HTTP_PORT` | 3000 | Web server port |
-| `OSC_PORT` | 8000 | OSC listening port |
-
-To use custom ports, copy `.env.example` to `.env` and modify the values.
+| Port | Protocol | Description |
+|------|----------|-------------|
+| 3000 | HTTP/WebSocket | Web display server |
+| 8000 | UDP | OSC input from GrandMA3 |
 
 ## Project Structure
 

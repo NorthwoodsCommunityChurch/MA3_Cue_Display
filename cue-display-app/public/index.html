@@ -6,7 +6,7 @@
     <title>GrandMA3 Cue</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -20,25 +20,56 @@
             color: #ffffff;
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             -webkit-font-smoothing: antialiased;
+            padding: 2rem;
         }
 
-        .cue-name {
+        .sequence-name {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-weight: 400;
+            color: #888888;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            margin-bottom: 0.5rem;
+        }
+
+        .cue-line {
             font-size: clamp(2.5rem, 7vw, 5rem);
             font-weight: 600;
             text-align: center;
-            padding: 2rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
             line-height: 1.2;
+        }
+
+        .cue-number {
+            color: #00a8ff;
+        }
+
+        .cue-name {
+            color: #ffffff;
         }
     </style>
 </head>
 <body>
-    <div class="cue-name" id="cueName"></div>
+    <div class="sequence-name" id="sequenceName"></div>
+    <div class="cue-line">
+        <span class="cue-number" id="cueNumber"></span>
+        <span class="cue-name" id="cueName"></span>
+    </div>
 
     <script>
-        const cueName = document.getElementById('cueName');
+        const sequenceNameEl = document.getElementById('sequenceName');
+        const cueNumberEl = document.getElementById('cueNumber');
+        const cueNameEl = document.getElementById('cueName');
         let ws;
 
         function connect() {
@@ -48,8 +79,22 @@
             ws.onmessage = (event) => {
                 try {
                     const msg = JSON.parse(event.data);
-                    if (msg.data && msg.data.cueName) {
-                        cueName.textContent = msg.data.cueName;
+                    if (msg.data) {
+                        // Sequence name on first line
+                        sequenceNameEl.textContent = msg.data.sequenceName || '';
+
+                        // Cue number
+                        const cueNum = msg.data.cueNumber || '--';
+                        cueNumberEl.textContent = cueNum !== '--' ? cueNum + ' ' : '';
+
+                        // Extract just the cue name (remove sequence and number prefix if present)
+                        let name = msg.data.cueName || '';
+                        // If cueName contains "SeqName CueNum CueName" format, extract just the name part
+                        const match = name.match(/^.+?\s+\d+(?:\.\d+)?\s+(.+)$/);
+                        if (match) {
+                            name = match[1];
+                        }
+                        cueNameEl.textContent = name;
                     }
                 } catch (e) {}
             };
