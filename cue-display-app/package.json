@@ -33,9 +33,7 @@
           "arch": ["arm64"]
         }
       ],
-      "entitlements": "entitlements.mac.plist",
-      "entitlementsInherit": "entitlements.mac.plist",
-      "hardenedRuntime": true,
+      "hardenedRuntime": false,
       "gatekeeperAssess": false
     },
     "dmg": {
