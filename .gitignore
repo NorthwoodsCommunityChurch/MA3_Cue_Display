@@ -43,6 +43,8 @@ build/
 # Screenshots
 *.png
 !cue-display-app/assets/*.png
+!Launcher.png
+!Web Layout.png
 
 # macOS icon build artifacts
 *.iconset/
