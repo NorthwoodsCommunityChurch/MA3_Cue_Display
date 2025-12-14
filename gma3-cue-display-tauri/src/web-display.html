@@ -81,28 +81,23 @@
 
         function connect() {
             const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-            ws = new WebSocket(`${protocol}//${window.location.host}`);
+            ws = new WebSocket(`${protocol}//${window.location.host}/ws`);
 
             ws.onmessage = (event) => {
                 try {
                     const msg = JSON.parse(event.data);
                     if (msg.data && msg.data.cueName) {
-                        // Remove waiting state on first cue
                         if (!hasReceivedCue) {
                             hasReceivedCue = true;
                             cueNameEl.classList.remove('waiting');
                         }
 
-                        // Sequence name on first line
                         sequenceNameEl.textContent = msg.data.sequenceName || '';
 
-                        // Cue number
                         const cueNum = msg.data.cueNumber || '--';
                         cueNumberEl.textContent = cueNum !== '--' ? cueNum + ' ' : '';
 
-                        // Extract just the cue name (remove sequence and number prefix if present)
                         let name = msg.data.cueName || '';
-                        // If cueName contains "SeqName CueNum CueName" format, extract just the name part
                         const match = name.match(/^.+?\s+\d+(?:\.\d+)?\s+(.+)$/);
                         if (match) {
                             name = match[1];

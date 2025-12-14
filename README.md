@@ -66,13 +66,15 @@ When a cue is triggered on the console, you should see the cue name update in re
 
 ```
 MA3 Cue Display/
-├── cue-display-app/          # Electron menu bar app
-│   ├── main.js               # Main process (server + OSC)
-│   ├── public/
-│   │   ├── index.html        # Web cue display (served to browsers)
-│   │   └── osc-log.html      # OSC message log viewer
-│   ├── window.html           # Launcher window UI
-│   └── package.json          # Dependencies and build config
+├── gma3-cue-display-tauri/     # Tauri menu bar app
+│   ├── src-tauri/
+│   │   ├── src/lib.rs          # Main Rust code (server + OSC)
+│   │   ├── Cargo.toml          # Rust dependencies
+│   │   └── tauri.conf.json     # Tauri configuration
+│   └── src/
+│       ├── index.html          # Launcher window UI
+│       ├── web-display.html    # Web cue display (served to browsers)
+│       └── osc-log.html        # OSC message log viewer
 └── README.md
 ```
 
@@ -81,7 +83,7 @@ MA3 Cue Display/
 ```
 ┌─────────────────┐         OSC (UDP)          ┌─────────────────┐
 │   GrandMA3      │ ────────────────────────▶  │   Menu Bar App  │
-│   Console       │        Port 8000           │   (Electron)    │
+│   Console       │        Port 8000           │     (Tauri)     │
 └─────────────────┘                            └────────┬────────┘
                                                         │
                                                         │ WebSocket
@@ -123,6 +125,17 @@ Connect to the server's WebSocket endpoint to receive real-time updates. Message
 ### GET /api/osc-log
 
 Returns the last 100 OSC messages as a JSON array.
+
+## Building from Source
+
+Requires [Rust](https://rustup.rs/) and [Tauri CLI](https://tauri.app/):
+
+```bash
+cd gma3-cue-display-tauri
+cargo tauri build
+```
+
+The built app will be in `src-tauri/target/release/bundle/`.
 
 ## License
 

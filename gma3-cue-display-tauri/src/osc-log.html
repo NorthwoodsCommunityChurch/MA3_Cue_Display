@@ -196,7 +196,6 @@
             const div = renderEntry(entry);
             logContainer.insertBefore(div, logContainer.firstChild);
 
-            // Keep only 100 entries in DOM
             while (logContainer.children.length > 100) {
                 logContainer.removeChild(logContainer.lastChild);
             }
@@ -204,7 +203,7 @@
 
         function connect() {
             const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-            ws = new WebSocket(`${protocol}//${window.location.host}`);
+            ws = new WebSocket(`${protocol}//${window.location.host}/ws`);
 
             ws.onopen = () => {
                 statusDot.classList.add('connected');
@@ -227,7 +226,6 @@
             };
         }
 
-        // Load existing log on page load
         fetch('/api/osc-log')
             .then(res => res.json())
             .then(log => {
@@ -238,7 +236,6 @@
             })
             .catch(console.error);
 
-        // Clear button
         document.getElementById('clearBtn').addEventListener('click', () => {
             entries = [];
             logContainer.innerHTML = '<div class="empty">Waiting for OSC messages...</div>';
