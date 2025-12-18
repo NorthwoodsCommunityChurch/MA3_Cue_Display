@@ -16,7 +16,7 @@
 
         body {
             font-family: 'Inter', -apple-system, sans-serif;
-            background: #000000;
+            background: transparent;
             color: #ffffff;
             min-height: 100vh;
             display: flex;
@@ -25,6 +25,12 @@
             align-items: center;
             -webkit-font-smoothing: antialiased;
             padding: 2rem;
+        }
+
+        .cue-container {
+            background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 80%);
+            padding: 2rem 4rem;
+            border-radius: 1rem;
         }
 
         .sequence-name {
@@ -66,10 +72,12 @@
     </style>
 </head>
 <body>
-    <div class="sequence-name" id="sequenceName"></div>
-    <div class="cue-line">
-        <span class="cue-number" id="cueNumber"></span>
-        <span class="cue-name waiting" id="cueName">Waiting for first cue...</span>
+    <div class="cue-container">
+        <div class="sequence-name" id="sequenceName"></div>
+        <div class="cue-line">
+            <span class="cue-number" id="cueNumber"></span>
+            <span class="cue-name waiting" id="cueName">Waiting for first cue...</span>
+        </div>
     </div>
 
     <script>
